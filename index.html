@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      this page will make request to the render server on a given interval
+    </div>
+    <div>the current interval is: <span id="number"></span> seconds</div>
+    <div>starting at: <span id="time"></span></div>
+    <div>the response area:</div>
+    <div id="response"></div>
+  </body>
+  <script>
+    const INTERVAL = 10;
+    const number = document.getElementById("number");
+    number.textContent = INTERVAL.toString();
+    const response = document.getElementById("response");
+    const time = document.getElementById("time");
+    time.textContent = new Date().toTimeString().slice(0, 8);
+
+    const SEVER_URL = "https://test-render-9xof.onrender.com/";
+    setInterval(() => {
+      fetch("http://localhost:3000/")
+        .then((res) => res.json())
+        .then((data) => {
+          const container = document.createElement("div");
+          container.textContent = data.message;
+          response.append(container);
+        })
+        .catch((err) => {
+          console.log(err);
+          const container = document.createElement("div");
+          container.textContent = "server error";
+          response.append(container);
+        });
+    }, INTERVAL * 1000);
+  </script>
+</html>
