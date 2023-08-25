@@ -15,6 +15,6 @@ app.listen(port, () => {
 
 function generateRandomString(length) {
   const randomBytes = crypto.randomBytes(length);
-  const randomString = randomBytes.toString("base64url");
+  const randomString = randomBytes.toString("base64");
   return randomString;
 }
